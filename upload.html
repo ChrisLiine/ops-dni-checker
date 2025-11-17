@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Landing Page Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+  <!-- Navigation bar -->
+  <div class="navbar">
+    <a href="home.html">Home</a>
+    <a href="upload.html">Instructions & Upload</a>
+    <a href="faq.html">FAQ</a>
+  </div>
+   <!-- Instructions Section -->
+  <section id="instructions-section">
+    <h2 class = "headings">Landing Page Upload Instructions</h2>
+    <p>
+      Please follow the guidelines below to ensure your landing pages are properly processed:
+    </p>
+    <ul>
+      <li>Upload <strong>MUST</strong> be a CSV file</li>
+      <li>Maximum amount of pages per upload: 500</li>
+      <li>The CSV uploaded should only contain the columns listed:</li>
+      <ol>
+        <li>Column 1: "Landing Page"</li>
+        <li>Column 2: "Account Name"</li>
+        <li>Column 3: "CRS ID" (NOTE: "CRS ID" values should only contain digits)</li>
+        <li>Column 4: "Owner"</li>
+        <li>Column 5: "Email"</li>
+      </ol>
+    </ul>
+    <p>
+      After uploading your CSV, a confirmation message will appear on your screen, and the page will refresh. Please allow up to five minutes for the confirmation to appear.
+      If you do not see this message after waiting, please refresh the page and re upload your csv.
+      If your uplaod was successful, you will receive an email within 1 hour with a csv attachment containing the processed results.
+    </p>
+  </section>
+  <hr>
+  <div class="upload-section">
+    <h2 class ="heading-desc" style="font-weight: bold;" onclick="document.getElementById('instructions').scrollIntoView()">Ready to upload?</h2>
+
+    <div class="images">
+      <img src="site_images/step_one_lp.png" alt="Step One: Upload CSV">
+      <img src="site_images/example_csv.png" alt="Example CSV Format">
+      <img src="site_images/process_csv.png" alt="Step Two: Process CSV">
+    </div>
+    
+    <label class="upload-btn">
+      Upload CSV
+      <input type="file" id= "csvUploadButton" name= "csvUpload" accept=".csv" />
+    </label>
+    <div id="fileNameDisplay" style="margin-top: 10px; font-weight: bold;"></div>
+    <button class= "process-btn" onclick="uploadCSV()">Process CSV</button>
+  
+    <pre id="output"></pre>
+
+  </div>
+  <!-- Modal for full image view -->
+  <div class="modal" id="imageModal">
+    <img id="modalImage" src="" alt="Full View" />
+  </div>
+
+<!-- Script used to expand images within modal -->
+<script>
+    const images = document.querySelectorAll('.images img');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        modalImage.src = img.src;
+        modal.classList.add('show');
+      });
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('show');
+        modalImage.src = '';
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        modal.classList.remove('show');
+        modalImage.src = '';
+      }
+    });
+  </script>
+
+<!-- SCRIPT TO UPLOAD RAW CSV-->
+ <script>
+  async function uploadCSV() {
+    const fileInput = document.getElementById('csvUploadButton');
+    const file = fileInput.files[0];
+    console.log("File selected:", file?.name);
+    if (!file) {
+      alert("Please select a CSV file.");
+      return;
+    }
+    const text = await file.text(); // Read as raw text
+    try {
+      const response = await fetch('https://us-east1-micro-mediator-451419-m5.cloudfunctions.net/lp-upload-check',{
+        method: "POST",
+        headers: {
+          "Content-Type": "text/csv" 
+        },
+        body: text
+      });
+      const contentType = response.headers.get("content-type");
+      const result = contentType.includes("application/json")
+        ? await response.json()
+        : await response.text();
+      console.log('output sent:', JSON.stringify(result.message, null, 2));
+      alert(result.message); // Alert will stop here until it has been dismissed. If code reaches next line, upload was successful.
+      window.location.href = window.location.href;
+    } catch (err) {
+      console.error("Upload error:", err);
+      document.getElementById("output").textContent = `❌ Error: ${err.message}`;
+    }
+  }
+</script>
+
+  <!-- DISPLAY FILE NAME FOR UPLOAD -->
+<script>
+  const fileInput = document.getElementById('csvUploadButton');
+  const fileNameDisplay = document.getElementById('fileNameDisplay');
+  fileInput.addEventListener('change', function () {
+    const file = fileInput.files[0];
+    if (file) {
+      fileNameDisplay.textContent = `Selected file: ${file.name}`;
+    } else {
+      fileNameDisplay.textContent = '';
+    }
+  });
+  </script>
+</body>
+</html>

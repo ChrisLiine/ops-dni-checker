@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Landing Page Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+  <!-- Navigation bar -->
+  <div class="navbar">
+    <a href="home.html">Home</a>
+    <a href="upload.html">Instructions & Upload</a>
+    <a href="faq.html">FAQ</a>
+  </div>
+   <!-- How it works Section -->
+  <div class = "faq">
+    <section id="how-it-works">
+    <h2 class = "headings">How does the landing page checker work?</h2>
+    <p>
+      The checker reads your uploaded CSV, adds a gclid query param(if one is not already present) to spoof a Google Ads visitor, randomizes the order of each landing page URL, and lists them to be checked. 
+      The checker will then create multiple chrome browsers with multiple tabs at a time in the cloud to visit each landing page url. The checker will wait 10 seonds after visiting a page in order to provide the page enough
+      time to load all elements. After waiting 10 seconds, the chcker will scan the page.
+      If a number is found in a phone number format (visible, not visible, within a script, a fax number, within the body, etc) the checker will return this number in the results.
+      <br>
+      <br>
+      Once all sites have loaded and the phone number detection has been completed, the checker will search these numbers against the Liine tracking number database to see if any of the numbers are registered tracking numbers.
+      If a number is found to as a registered tracking number, the checker will note this in the results. Once the results are complete, an email will be sent to the email address provided in the CSV with a link to download the results CSV.
+      <br>
+    </p>
+
+    </section>
+      <hr class ="larger-hr">
+    <section id="same-site">
+    <h2 class = "headings">Why is the same site listed multiple times?</h2>
+    <p>
+      By now you have noticed that some landing pages are listed multiple times within your results CSV. This is because the report is designed to list phone numbers, and not landing pages.
+      Each line within the report is a number that was found while the landing page checker was scanning the sites. Some sites may have multiple different phone number listings on the same page, 
+      and thus will be listed multiple times within the results. For example, if a practice has two locations listed on the same landing page,
+       the checker will find both numbers, and list both numbers within the results CSV while displaying the same landing page url since both numbers were found on the same page.
+      <br>
+    </p>
+
+    </section>
+      <hr class ="larger-hr">
+    <section id="public-site">
+    <h2 class = "headings">Can customers upload their own CSV?</h2>
+    <p>
+      Not yet. We're building a similiar site that will allow customers to upload their own CSVs directly.
+      The difference in the sites will be less required fields for the CSV upload, and less detailed results.
+      <br>
+    </p>
+
+    </section>
+      <hr class ="larger-hr">
+    <section id="how-many-customers">
+    <h2 class = "headings">How many files can I upload at a time?</h2>
+    <p>
+      Each upload can only consist of one CSV file. However, you can upload as many times as you'd like. Each file will be processed separately, so you should receive separate emails for each upload.
+    </p>
+
+    </section>
+      <hr class ="larger-hr">
+    <section id="duplicate-uploads">
+    <h2 class = "headings">What if I upload the same file twice or two uploads for the same customer?</h2>
+    <p>
+      If you've uploaded the same file twice on accident, there is no need to worry! The system will automatically handle duplicate uploads. The second submission will overwrite the first submission.
+      So if you made a mistake in your first upload, simply re-upload the corrected CSV and the system will process the new file instead.
+    </p>
+
+    </section>
+      <hr class ="larger-hr">
+    <section id="email-issues">
+      <h2 class = "headings">Why are my results emailed?</h2>
+      <p>
+        Let me explain something to you. I set the rules, and you follow them. Blindly. Okay? And if you have a problem with that then you can talk to our complaint department. It's a trash can.
+      </p>
+    </section>
+      <hr class ="larger-hr">
+    <section id="processing-time">
+      <h2 class = "headings">I just uploaded my CSV, when will I get my results?</h2>
+      <p>
+        The processing time depends on when your file has been uploaded.
+        All landing page uploads are processed in the order they are received at the beginning of the hour. For example, if you upload your file at 1:15pm, your file will be processed at 2:00pm.
+        If you upload your file at 1:55pm, your file will be processed at 2:00pm as well. 
+        Once your file is being processed, the time it takes to complete depends on how many landing pages are in your upload.
+      </p>
+
+    </section>
+      <hr class ="larger-hr">
+    <section id="results-def">
+      <h2 class = "headings">What does 'x' column mean?</h2>
+      <p>
+        Below are each of the columns definitions found in the results CSV. Please note while only scrape one columns are listed below, scrape two columns will have the same definitions:
+        <ul>
+          <li><strong>account_name</strong>: The name of the account associated with the landing page (pulled directly from your CSV upload).</li>
+          <li><strong>account_id</strong>: The CRS ID associated with the landing page (pulled directly from your CSV upload).</li>
+          <li><strong>cleaned_lp</strong>: This is the URL that the landing page checker is told to navigate to on browser/tab creation. 
+            The URL may be adjusted so the web protocol used is "https", and a gclid is applied to the checked page. </li>
+          <li><strong>swapping_status</strong>: This status will report either true or false. True lets the user know the numbers have swapped by comparing the scraped phone numbers from scrape one and two.
+          This could consists of swapping from any third party.</li>
+          <li><strong>scrape_one_num</strong>: This is a phone number that was found during the scrape.</li>
+          <li><strong>scrape_one_label</strong>: If the phone number found during the scrape is a Liine tracking number, this column will contain the name of said number within Liine.</li>
+          <li><strong>scrape_one_desc</strong>: If the phone number found during the scrape is a Liine tracking number, this column will contain the description associated with said Liine tracking number.</li>
+          <li><strong>scrape_one_crs_id</strong>: If the phone number found during the scrape is a Liine tracking number, this column will contain the CRS ID of the customer this tracking number is associated with.
+          Please note, this CRS ID can differ from the provided CRS ID within the CSV upload.</li>
+          <li><strong>scrape_one_swap_number</strong>: This column will either be true or false. If the scraped number is contained within a pools swap over numbers list, the result will be true. </li>
+          <li><strong>scrape_one_run_id</strong>: The run ID is a unique eight digit ID generated per browser instance. One browser can check up to five landing pages, so multiple landing pages may contain the same ID.</li>
+          <li><strong>scrape_one_network_idle</strong>: During the page scrape, one of the check points consists of checking if the network has idled. This means there have been no ongoing network requests within 500ms.
+          If there have been none, than the returned status will be true. 'false' is a common result. We will wait a maximum of five seconds before no longer checking for network requests.</li>
+          <li><strong>scrape_one_body_visible</strong>: After checking if the network has idled, the next check is to look for the body element. If the body element does not exist within eight seconds, this column will return false.</li>
+          <li><strong>scrape_one_date_scanned</strong>: This column will list the date and time(24 hour format) the website was checked.</li>
+          <li><strong>scrape_one_metadata</strong>: If the number found is a Liine tracking number, this column will list the metadata associated with said number.</li>
+          <li><strong>scrape_one_obs_results</strong>: If a known OBS vendor is found on the site (please view the list of known obs vendors here), the checker will list the vendor
+          and check if the vendor link includes our session guid.</li>
+          <li><strong>scrape_one_final_url</strong>: The "final url" is url of the page captured immediately before the phone numbers are pulled from the website. This can differ from the "cleaned lp".
+          This is usually caused by 301/302 redirects, but can sometimes be due to website scripts that remove query parameters before page load. </li>
+          <li><strong>scrape_one_liine_guid</strong>: If a page has our Liine code installed in any way (via gtm, lazy loaded, cached, or direct) and has loaded, this field will contain the session guid created for this 'visitor'.</li>
+          <li><strong>scrape_one_liine_iframe</strong>: This field will either contain true or false. If a Liine jotform iFrame container is found on the page, the field will contain true.</li>
+          <li><strong>scrape_one_hidden_input</strong>: This field will either be true or false. If a non Liine iFrame form was found on the page, the form contents will be scanned for our standard guid injection check (placeholder = liine_guid_ph).</li>
+          <li><strong>scrape_one_input_injection</strong>: This field will either be true or false. If the hidden input field was found, the checker will scan the field to see if a value that matches 
+            the Liine guid exists.</li>
+          <li><strong>scrape_one_hardcoded_num</strong>: The Liine checker will attempt to scrape a website with Javascript and without JS. This field will contain the number found when Javascript was disabled.</li>
+          <li><strong>scrape_one_form_present</strong>: This field will either be true or false. If a non Liine jotform form is found on the site (glacial form, one two three form, or a generic form builder)
+          this field will contain true. Please note, if a form is found anywhere on this page (even a newsletter subscription form) the field will be true.</li>
+          <li><strong>liine_swap</strong>: This field will either be true or false. If number swapping was detected, the checker will then confirm if one of the swapped numbers belongs to Liine. If the numbers swapped
+          with a Liine tracking number, the field will be true.</li>
+          <li><strong>redirect_status</strong>: This feed will either be true or false. This feed will compare the "cleaned landing page" (the url the checker is told to navigate to) and the "final url" 
+            (the url of the page grabbed immediately before the page is checked). If the urls do not match, then the status will be true (a redirect has occurred). </li>
+          <li><strong>form_issue</strong>: If a non Liine form is present, the checker will look for the hidden input field and a value within this field.
+          If a hidden input is found with no value or if a form is found with no hidden input field, the checker will return true(there is an issue) with the issue description</li>
+      </p>
+
+    </section>
+  </div>
+
+
+  <!--  Hiding, this section is not needed in the FAQ page
+    <div class="main">
+      <h1 onclick="document.getElementById('instructions').scrollIntoView()">Upload Instructions</h1>
+
+      <div class="images">
+        <img src="site_images/lp_checker_csv_format.png" alt="Example CSV Format">
+        <img src="site_images/lp_checker_csv_format.png" alt="Example CSV Format">
+        <img src="site_images/lp_checker_csv_format.png" alt="Example CSV Format">
+      </div>
+      
+      <label class="upload-btn">
+        Upload CSV
+        <input type="file" id= "csvUploadButton" name= "csvUpload" accept=".csv" />
+      </label>
+      <div id="fileNameDisplay" style="margin-top: 10px; font-weight: bold;"></div>
+      <button class= "process-btn" onclick="uploadCSV()">Process CSV</button>
+    
+      <pre id="output"></pre>
+
+    </div>
+  -->
+  <!-- Modal for full image view -->
+   <!---Hiding, this section is not needed in the FAQ page
+  <div class="modal" id="imageModal">
+    <img id="modalImage" src="" alt="Full View" />
+  </div>
+  -->
+  <!-- Instructions Section -->
+   <!--- Hiding, this section is not needed in the FAQ page
+  <section id="instructions-section">
+    
+    <h2 class = "headings">Landing Page Upload Instructions</h2>
+    
+    <p>
+      Please follow the following guidelines to ensure your landing pages are properly processed:
+    </p>
+    <ul>
+      <li>Upload <strong>MUST</strong> be a CSV file</li>
+      <li>Maximum amount of pages per upload: 100</li>
+      <li>The CSV uploaded should only have two columns:</li>
+      <ol>
+        <li>Column 1: "Landing Page"</li>
+        <li>Column 2: "Account Name"</li>
+        <li>Column 3: "CRS ID" (NOTE: "CRS ID" values must only contain digits)</li>
+        <li>Column 4: "Owner"</li>
+        <li>Column 5: "Email"</li>
+      </ol>
+    </ul>
+    <p>
+      After uploading your CSV, a confirmation message will appear on your screen, and the page will refresh. Please allow up to five minutes for the confirmation to appear.
+      If you do not see this message after waiting, please refresh the page and try again.
+      If your uplaod was successful, you will receive an email within 1 hour with a csv attachment containing your results.
+    </p>
+  </section>
+-->
+  <script>
+    const images = document.querySelectorAll('.images img');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        modalImage.src = img.src;
+        modal.classList.add('show');
+      });
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('show');
+        modalImage.src = '';
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        modal.classList.remove('show');
+        modalImage.src = '';
+      }
+    });
+  </script>
+<!-- SCRIPT USED TO UPLOAD CSV AS JSON AND FIRE LP CHECKER-->
+  <script>
+    
+    function processCSV() {
+      alert("Processing CSV... This may take a moment.");
+      const input = document.getElementById('csvUploadbutton');
+      const file = input.files[0];
+
+      if (!file) {
+        alert("Please choose a CSV file.");
+        return;
+      }
+      console.log("File selected:", file.name);
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        const text = event.target.result;
+        const lines = text.trim().split('\n');
+
+        // Parse lines into column A values
+        const csvValues = lines
+          .map(line => {
+            // Basic CSV-safe split for commas inside quotes
+            const match = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+            return match
+            
+          })
+          .filter(Boolean); // remove empty/null
+
+        //skip the header
+        const dataOnly = csvValues.slice(1);
+
+        // Show result on page
+        document.getElementById('output').textContent = JSON.stringify(csvValues, null, 2);
+        console.log(JSON.stringify(dataOnly, null, 2));
+        //used to post to gcloud service
+        fetch('https://us-east1-micro-mediator-451419-m5.cloudfunctions.net/printcsvhook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: csvValues })
+        })
+        .then(res => res.text())
+        .then(responseText => alert("Server response: " + responseText))
+        .catch(err => alert("Upload failed: " + err));
+        
+      };
+
+      reader.readAsText(file);
+    }
+      
+ async function csvProcess() {
+    const fileInput = document.getElementById('csvUploadbutton');
+
+    if (!fileInput.files.length) {
+      alert("Please choose a CSV file.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('csvUpload', fileInput.files[0]); // ✅ Matches Express field name
+
+    try {
+      const response = await fetch('https://us-east1-micro-mediator-451419-m5.cloudfunctions.net/printcsvhook', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const result = await response.json();
+      console.log(result);
+      document.getElementById('output').textContent = JSON.stringify(result, null, 2);
+    } catch (err) {
+      console.error('❌ Upload failed:', err);
+    }
+  }
+  </script>
+<!-- SCRIPT TO UPLOAD RAW CSV-->
+ <script>
+  async function uploadCSV() {
+    const fileInput = document.getElementById('csvUploadButton');
+    const file = fileInput.files[0];
+    console.log("File selected:", file?.name);
+
+    if (!file) {
+      alert("Please select a CSV file.");
+      return;
+    }
+
+    const text = await file.text(); // Read as raw text
+
+    try {
+      //const response = await fetch('https://us-east1-micro-mediator-451419-m5.cloudfunctions.net/printcsvhook', {
+      const response = await fetch('https://us-east1-micro-mediator-451419-m5.cloudfunctions.net/lp-upload-check',{
+        method: "POST",
+        headers: {
+          "Content-Type": "text/csv" // ✅ Tell server it's raw CSV
+        },
+        body: text
+      });
+
+      const contentType = response.headers.get("content-type");
+
+      const result = contentType.includes("application/json")
+        ? await response.json()
+        : await response.text();
+      console.log('output sent:', JSON.stringify(result.message, null, 2));
+      alert(result.message); // Alert will stop here until it has been dismissed. If code reaches next line, upload was successful.
+      window.location.href = window.location.href;
+    } catch (err) {
+      console.error("Upload error:", err);
+      document.getElementById("output").textContent = `❌ Error: ${err.message}`;
+    }
+  }
+</script>
+
+  <!-- DISPLAY FILE NAME FOR UPLOAD -->
+  <script>
+  const fileInput = document.getElementById('csvUploadButton');
+  const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+  fileInput.addEventListener('change', function () {
+    const file = fileInput.files[0];
+    if (file) {
+      fileNameDisplay.textContent = `Selected file: ${file.name}`;
+    } else {
+      fileNameDisplay.textContent = '';
+    }
+  });
+  </script>
+</body>
+</html>
